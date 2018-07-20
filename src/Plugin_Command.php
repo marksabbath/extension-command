@@ -643,6 +643,7 @@ class Plugin_Command extends \WP_CLI\CommandWithUpgrade {
 				'update_id' => $file,
 				'title' => $details['Name'],
 				'description' => wordwrap( $details['Description'] ),
+                'wordpress.org' => $this->get_plugin_availability( $name ),
 			);
 		}
 

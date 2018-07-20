@@ -477,6 +477,28 @@ abstract class CommandWithUpgrade extends \WP_CLI_Command {
 		return (array) $update_list->response[ $slug ];
 	}
 
+	/**
+	 * Get the availability of the plugin from wordpress.org
+	 *
+	 * @param string $slug The plugin/theme slug
+	 *
+	 * @return bool true|false
+	 */
+	protected function get_plugin_availability( $slug ) {
+			$api = plugins_api( 'plugin_information', array( 'slug' => $slug ) );
+
+			if ( is_wp_error( $api ) ) {
+					return 'unavailable';
+			}
+
+			if ( strtotime( '-2 years') > strtotime( $api->last_updated ) ) {
+					return 'stale';
+			}
+
+			return 'available';
+
+	}
+
 	private $map = array(
 		'short' => array(
 			'inactive' => 'I',
