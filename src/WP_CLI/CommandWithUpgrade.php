@@ -485,7 +485,24 @@ abstract class CommandWithUpgrade extends \WP_CLI_Command {
 	 * @return bool true|false
 	 */
 	protected function get_plugin_availability( $slug ) {
-			$api = plugins_api( 'plugin_information', array( 'slug' => $slug ) );
+			$api = plugins_api( 'plugin_information',
+                array(
+                    'slug' => $slug,
+                    'fields' => array(
+                        'added' => false,
+                        'compatibility' => false,
+                        'downloadlink'  => false,
+                        'donate_link'   => false,
+                        'homepage'      => false,
+                        'rating'        => false,
+                        'require'       => false,
+                        'sections'      => false,
+                        'tags'          => false,
+                        'tested'        => false,
+
+                        
+                ),
+            ) );
 
 			if ( is_wp_error( $api ) ) {
 					return 'unavailable';
